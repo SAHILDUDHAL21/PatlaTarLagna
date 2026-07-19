@@ -1,0 +1,76 @@
+spring:
+  profiles:
+    active: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:patlatarlagna}?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:2525}
+    username: ${MAIL_USER:user}
+    password: ${MAIL_PASSWORD:pass}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+jwt:
+  secret: 9a6564c126a11d027e85c15e8c33878b6689d023f03b879124a686b24bc9ef8f3e2b1049ffcd5a890a2a4e21a084ef701cdbeab3216892e62a048a6b185675c9
+  expiration: 86400000 # 24 hours
+  refreshExpiration: 604800000 # 7 days
+
+app:
+  upload-dir: ${UPLOAD_DIR:uploads}
+
+logging:
+  level:
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:patlatarlagnatest;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+  mail:
+    host: localhost
+    port: 2525
+
+jwt:
+  secret: 9a6564c126a11d027e85c15e8c33878b6689d023f03b879124a686b24bc9ef8f3e2b1049ffcd5a890a2a4e21a084ef701cdbeab3216892e62a048a6b185675c9
+  expiration: 3600000 # 1 hour
+  refreshExpiration: 86400000 # 24 hours
+
+app:
+  upload-dir: target/uploads

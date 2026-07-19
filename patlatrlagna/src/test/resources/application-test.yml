@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:patlatarlagnatest;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  mail:
+    host: localhost
+    port: 2525
+
+jwt:
+  secret: 9a6564c126a11d027e85c15e8c33878b6689d023f03b879124a686b24bc9ef8f3e2b1049ffcd5a890a2a4e21a084ef701cdbeab3216892e62a048a6b185675c9
+  expiration: 3600000
+  refreshExpiration: 86400000
+
+app:
+  upload-dir: target/test-uploads
