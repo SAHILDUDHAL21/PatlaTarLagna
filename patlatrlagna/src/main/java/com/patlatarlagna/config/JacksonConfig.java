@@ -1,15 +1,24 @@
 package com.patlatarlagna.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import org.springframework.context.annotation.Bean;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @Configuration
-public class JacksonConfig {
+public class JacksonConfig implements WebMvcConfigurer {
 
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jacksonCustomizer() {
-        return builder -> builder.featuresToDisable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES);
+    @Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        for (HttpMessageConverter<?> converter : converters) {
+            if (converter instanceof MappingJackson2HttpMessageConverter) {
+                ObjectMapper mapper = ((MappingJackson2HttpMessageConverter) converter).getObjectMapper();
+                mapper.configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false);
+            }
+        }
     }
 }
