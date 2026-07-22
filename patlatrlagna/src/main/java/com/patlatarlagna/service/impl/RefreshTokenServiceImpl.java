@@ -38,9 +38,16 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BadRequestException("User not found: " + userId));
 
-        // Delete any existing refresh token for the user to prevent duplication
-        refreshTokenRepository.deleteByUser(user);
+        // Try to find an existing refresh token for the user and update it atomically.
+        Optional<RefreshToken> existing = refreshTokenRepository.findByUser(user);
+        if (existing.isPresent()) {
+            RefreshToken refreshToken = existing.get();
+            refreshToken.setToken(UUID.randomUUID().toString());
+            refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
+            return refreshTokenRepository.save(refreshToken);
+        }
 
+        // No existing token: create a new one
         RefreshToken refreshToken = RefreshToken.builder()
                 .user(user)
                 .token(UUID.randomUUID().toString())

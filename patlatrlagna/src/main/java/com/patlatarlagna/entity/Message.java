@@ -32,7 +32,11 @@ public class Message {
     private String content;
 
     @Column(name = "is_read", nullable = false)
-    private boolean read;
+    private Boolean read;
+
+    public boolean isRead() {
+        return Boolean.TRUE.equals(this.read);
+    }
 
     @Column(name = "sent_at")
     private LocalDateTime sentAt;

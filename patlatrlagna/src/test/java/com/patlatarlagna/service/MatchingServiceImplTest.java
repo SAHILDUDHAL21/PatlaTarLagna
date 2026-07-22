@@ -61,18 +61,18 @@ class MatchingServiceImplTest {
         profileOne = Profile.builder()
                 .id(1L).user(userOne).name("User One").age(25)
                 .gender(Gender.MALE).religion("Hindu").caste("Brahmin")
-                .motherTongue("Hindi").height(175).weight(70)
+                .motherTongue("Hindi").height(175.0).weight(70.0)
                 .education("B.Tech").occupation("Engineer")
-                .annualIncome(1200000).maritalStatus(MaritalStatus.NEVER_MARRIED)
+                .annualIncome(1200000.0).maritalStatus(MaritalStatus.NEVER_MARRIED)
                 .city("Pune").state("Maharashtra").country("India")
                 .lifestyle(Lifestyle.VEGETARIAN).build();
 
         profileTwo = Profile.builder()
                 .id(2L).user(userTwo).name("User Two").age(24)
                 .gender(Gender.FEMALE).religion("Hindu").caste("Brahmin")
-                .motherTongue("Hindi").height(160).weight(55)
+                .motherTongue("Hindi").height(160.0).weight(55.0)
                 .education("M.B.B.S").occupation("Doctor")
-                .annualIncome(1800000).maritalStatus(MaritalStatus.NEVER_MARRIED)
+                .annualIncome(1800000.0).maritalStatus(MaritalStatus.NEVER_MARRIED)
                 .city("Pune").state("Maharashtra").country("India")
                 .lifestyle(Lifestyle.VEGETARIAN).build();
     }

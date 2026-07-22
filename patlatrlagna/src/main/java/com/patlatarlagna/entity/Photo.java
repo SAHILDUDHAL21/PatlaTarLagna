@@ -28,7 +28,11 @@ public class Photo {
     private String photoUrl;
 
     @Column(name = "is_main", nullable = false)
-    private boolean main;
+    private Boolean main;
+
+    public boolean isMain() {
+        return Boolean.TRUE.equals(this.main);
+    }
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

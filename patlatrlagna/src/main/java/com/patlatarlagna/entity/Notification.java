@@ -33,7 +33,11 @@ public class Notification {
     private NotificationType type;
 
     @Column(name = "is_read", nullable = false)
-    private boolean read;
+    private Boolean read;
+
+    public boolean isRead() {
+        return Boolean.TRUE.equals(this.read);
+    }
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

@@ -67,8 +67,9 @@ public class ProfileController {
     public ResponseEntity<ApiResponse<PhotoDto>> uploadPhoto(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestParam("file") MultipartFile file,
-            @RequestParam(value = "isMain", defaultValue = "false") boolean isMain) {
-        PhotoDto photoDto = profileService.uploadPhoto(userDetails.getId(), file, isMain);
+            @RequestParam(value = "isMain", required = false) Boolean isMain) {
+        boolean mainFlag = Boolean.TRUE.equals(isMain);
+        PhotoDto photoDto = profileService.uploadPhoto(userDetails.getId(), file, mainFlag);
         return ResponseEntity.ok(ApiResponse.success("Photo uploaded successfully", photoDto));
     }
 
