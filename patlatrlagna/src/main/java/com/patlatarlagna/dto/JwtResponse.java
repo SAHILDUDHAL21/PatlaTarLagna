@@ -16,5 +16,10 @@ public class JwtResponse {
     private Long id;
     private String email;
     private List<String> roles;
-    private boolean hasProfile;
+    private Boolean hasProfile;
+
+    // Keep boolean-style accessor for tests and older callers that expect isHasProfile()
+    public boolean isHasProfile() {
+        return Boolean.TRUE.equals(this.hasProfile);
+    }
 }

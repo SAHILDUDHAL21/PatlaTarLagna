@@ -22,6 +22,17 @@ public class EmailServiceImpl implements EmailService {
     public void sendOtpEmail(String toEmail, String otp) {
         String subject = "PatlaTarLagna - Verify Your Account";
         String body = "Welcome to PatlaTarLagna! Your email verification OTP is: " + otp + "\nExpiry: 10 minutes.";
+        // Log OTP at info level so it can be seen in development when SMTP isn't available
+        logger.info("Verification OTP for {} => {}", toEmail, otp);
+        // Also write OTP to a local file for easy retrieval during development
+        try {
+            java.nio.file.Path p = java.nio.file.Paths.get("target/otp.log");
+            java.nio.file.Files.createDirectories(p.getParent());
+            String line = java.time.Instant.now() + " VERIFICATION " + toEmail + " " + otp + System.lineSeparator();
+            java.nio.file.Files.writeString(p, line, java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.APPEND);
+        } catch (Exception ex) {
+            logger.warn("Failed to write OTP to file: {}", ex.getMessage());
+        }
         sendEmail(toEmail, subject, body);
     }
 
@@ -29,6 +40,17 @@ public class EmailServiceImpl implements EmailService {
     public void sendPasswordResetEmail(String toEmail, String otp) {
         String subject = "PatlaTarLagna - Password Reset Request";
         String body = "You requested to reset your password. Use the following OTP to reset it: " + otp + "\nExpiry: 10 minutes.";
+        // Log reset OTP at info level for development visibility
+        logger.info("Password reset OTP for {} => {}", toEmail, otp);
+        // Also write reset OTP to a local file for easy retrieval during development
+        try {
+            java.nio.file.Path p = java.nio.file.Paths.get("target/otp.log");
+            java.nio.file.Files.createDirectories(p.getParent());
+            String line = java.time.Instant.now() + " RESET " + toEmail + " " + otp + System.lineSeparator();
+            java.nio.file.Files.writeString(p, line, java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.APPEND);
+        } catch (Exception ex) {
+            logger.warn("Failed to write OTP to file: {}", ex.getMessage());
+        }
         sendEmail(toEmail, subject, body);
     }
 

@@ -32,8 +32,8 @@ public class Profile {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false)
-    private int age;
+    @Column(nullable = true)
+    private Integer age;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
@@ -51,11 +51,11 @@ public class Profile {
     @Column(name = "mother_tongue", nullable = false, length = 50)
     private String motherTongue;
 
-    @Column(nullable = false)
-    private double height; // in cm
+    @Column(nullable = true)
+    private Double height; // in cm
 
-    @Column(nullable = false)
-    private double weight; // in kg
+    @Column(nullable = true)
+    private Double weight; // in kg
 
     @Column(nullable = false, length = 100)
     private String education;
@@ -63,8 +63,8 @@ public class Profile {
     @Column(nullable = false, length = 100)
     private String occupation;
 
-    @Column(name = "annual_income", nullable = false)
-    private double annualIncome;
+    @Column(name = "annual_income", nullable = true)
+    private Double annualIncome;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "marital_status", nullable = false, length = 30)
@@ -100,7 +100,11 @@ public class Profile {
     private List<Photo> photos = new ArrayList<>();
 
     @Column(name = "is_verified", nullable = false)
-    private boolean verified;
+    private Boolean verified;
+
+    public boolean isVerified() {
+        return Boolean.TRUE.equals(this.verified);
+    }
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

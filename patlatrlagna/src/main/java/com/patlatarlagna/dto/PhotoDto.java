@@ -9,5 +9,5 @@ import lombok.*;
 public class PhotoDto {
     private Long id;
     private String photoUrl;
-    private boolean main;
+    private Boolean main;
 }
