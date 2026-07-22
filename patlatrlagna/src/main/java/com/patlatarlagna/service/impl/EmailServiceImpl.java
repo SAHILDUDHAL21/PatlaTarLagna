@@ -22,6 +22,8 @@ public class EmailServiceImpl implements EmailService {
     public void sendOtpEmail(String toEmail, String otp) {
         String subject = "PatlaTarLagna - Verify Your Account";
         String body = "Welcome to PatlaTarLagna! Your email verification OTP is: " + otp + "\nExpiry: 10 minutes.";
+        // Log OTP at info level so it can be seen in development when SMTP isn't available
+        logger.info("Verification OTP for {} => {}", toEmail, otp);
         sendEmail(toEmail, subject, body);
     }
 
@@ -29,6 +31,8 @@ public class EmailServiceImpl implements EmailService {
     public void sendPasswordResetEmail(String toEmail, String otp) {
         String subject = "PatlaTarLagna - Password Reset Request";
         String body = "You requested to reset your password. Use the following OTP to reset it: " + otp + "\nExpiry: 10 minutes.";
+        // Log reset OTP at info level for development visibility
+        logger.info("Password reset OTP for {} => {}", toEmail, otp);
         sendEmail(toEmail, subject, body);
     }
 
